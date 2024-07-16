@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'pokedex-ce9f4',
     storageBucket: 'pokedex-ce9f4.appspot.com',
   );
+
 }
