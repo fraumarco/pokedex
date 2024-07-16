@@ -39,6 +39,11 @@ dependencies:
   flutter_bloc: ^8.1.6
   firebase_auth: ^5.1.2
   cloud_firestore: ^5.1.0
+  retrofit: ^4.1.0
+  json_annotation: ^4.9.0
+  retrofit_generator: ^8.1.2
+  build_runner: ^2.4.11
+  built_value_generator: ^8.9.2
 
 dev_dependencies:
   flutter_test:

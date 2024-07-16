@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex/application/models/logged_user.dart';
 import 'package:pokedex/application/views/authentication/authentication_view.dart';
 import 'package:pokedex/application/views/splash/splash_view.dart';
 import 'package:pokedex/application/views/pokemon_list/pokemon_list_view.dart';
@@ -33,13 +35,27 @@ class MyApp extends StatelessWidget {
             return const SplashView();
           }
 
+          if (snapshot.connectionState == ConnectionState.done) {}
+
           if (snapshot.hasData) {
-            return const PokemonListView();
+            setLoggedUserData(snapshot.data!);
+            return PokemonListView();
           }
 
           return const AuthenticationView();
         },
       ),
     );
+  }
+
+  void setLoggedUserData(User user) async {
+    LoggedUser.instance.email = user.email!;
+
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    LoggedUser.instance.name = userData.data()!["name"];
   }
 }

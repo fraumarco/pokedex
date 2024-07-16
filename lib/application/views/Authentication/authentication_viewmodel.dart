@@ -66,18 +66,8 @@ class AuthenticationViewModel extends Cubit<bool> {
       emit(true); //Is authenticating
 
       if (isLogin) {
-        final userCredentials = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: _enteredEmail, password: _enteredPassword);
-
-        LoggedUser.instance.email = userCredentials.user!.email!;
-
-        final userData = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredentials.user!.uid)
-            .get();
-
-        LoggedUser.instance.name = userData.data()!["name"];
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _enteredEmail, password: _enteredPassword);
       } else {
         final userCredentials = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
