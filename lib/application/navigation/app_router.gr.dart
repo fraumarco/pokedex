@@ -21,16 +21,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthenticationView(),
       );
     },
+    PokemonDetailRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PokemonDetailView(),
+      );
+    },
     PokemonListRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const PokemonListView(),
-      );
-    },
-    SplashRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SplashView(),
       );
     },
   };
@@ -51,6 +51,20 @@ class AuthenticationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PokemonDetailView]
+class PokemonDetailRoute extends PageRouteInfo<void> {
+  const PokemonDetailRoute({List<PageRouteInfo>? children})
+      : super(
+          PokemonDetailRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PokemonDetailRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [PokemonListView]
 class PokemonListRoute extends PageRouteInfo<void> {
   const PokemonListRoute({List<PageRouteInfo>? children})
@@ -60,20 +74,6 @@ class PokemonListRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'PokemonListRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SplashView]
-class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children})
-      : super(
-          SplashRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SplashRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pokedex/Application/Views/Authentication/authentication_viewmodel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,12 @@ class AuthenticationView extends StatefulWidget {
 class _AuthenticationViewState extends State<AuthenticationView> {
   final viewModel = AuthenticationViewModel();
   final _form = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
 
   @override
   Widget build(BuildContext context) {

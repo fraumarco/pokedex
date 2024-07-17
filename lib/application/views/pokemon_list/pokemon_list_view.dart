@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/navigation/app_router.dart';
 import 'package:pokedex/application/networking/response/pokemon_response.dart';
+import 'package:pokedex/application/views/pokemon_detail/pokemon_detail_view.dart';
 import 'package:pokedex/application/views/pokemon_list/pokemon_list_viewmodel.dart';
 import 'package:pokedex/application/widgets/loader_list_card.dart';
+import 'package:pokedex/application/widgets/pokemon_list.dart';
 import 'package:pokedex/application/widgets/pokemon_list_card.dart';
 
 @RoutePage()
@@ -22,7 +25,11 @@ class _PokemonListViewState extends State<PokemonListView> {
   @override
   void initState() {
     super.initState();
-
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight
+    ]);
     viewModel.getData();
   }
 
@@ -39,7 +46,7 @@ class _PokemonListViewState extends State<PokemonListView> {
           IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
-                context.router.push(const AuthenticationRoute());
+                context.router.replace(const AuthenticationRoute());
               },
               icon: const Icon(
                 Icons.exit_to_app,
@@ -51,28 +58,29 @@ class _PokemonListViewState extends State<PokemonListView> {
       body: BlocBuilder<PokemonListViewModel, List<PokemonResultResponse>>(
         bloc: viewModel,
         builder: (ctx, pokemonList) {
-          return Center(
-            child: NotificationListener<ScrollNotification>(
-              onNotification: (notification) {
-                if (notification is ScrollEndNotification &&
-                    notification.metrics.extentAfter == 0) {
-                  viewModel.getData();
-                }
-                return false;
-              },
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                itemCount: pokemonList.length + 1,
-                itemBuilder: (builderCtx, index) {
-                  if (index < pokemonList.length) {
-                    return PokemonListCard(
-                        pokemon: pokemonList[index], pokemonIndex: index + 1);
-                  } else {
-                    return const LoaderListCard();
-                  }
-                },
-              ),
-            ),
+          return OrientationBuilder(
+            builder: (context, orientation) {
+              if (orientation == Orientation.portrait) {
+                return PokemonList(
+                    pokemonList: pokemonList,
+                    viewModel: viewModel,
+                    orientation: orientation);
+              }
+
+              return Row(
+                children: [
+                  Expanded(
+                    child: PokemonList(
+                        pokemonList: pokemonList,
+                        viewModel: viewModel,
+                        orientation: orientation),
+                  ),
+                  const Expanded(
+                    child: PokemonDetailView(),
+                  )
+                ],
+              );
+            },
           );
         },
       ),
