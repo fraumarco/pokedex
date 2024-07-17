@@ -12,6 +12,7 @@ class PokemonListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.primaryContainer,
       child: Row(
         children: [
           Image(
@@ -22,7 +23,10 @@ class PokemonListCard extends StatelessWidget {
           ),
           Text(
             pokemon.name?.capitalized ?? "",
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onPrimaryContainer),
           )
         ],
       ),

@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/Application/Views/Authentication/authentication_viewmodel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+@RoutePage()
 class AuthenticationView extends StatefulWidget {
   const AuthenticationView({super.key});
 
@@ -49,7 +51,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.9),
+                          color: Colors.grey.withOpacity(0.8),
                           borderRadius: BorderRadius.circular(16)),
                       child: SingleChildScrollView(
                         child: Form(

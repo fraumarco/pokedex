@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/models/logged_user.dart';
+import 'package:pokedex/application/navigation/app_router.dart';
 
 class AuthenticationViewModel extends Cubit<bool> {
   AuthenticationViewModel() : super(false);
@@ -68,6 +70,10 @@ class AuthenticationViewModel extends Cubit<bool> {
       if (isLogin) {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
+
+        if (context.mounted) {
+          context.router.push(const PokemonListRoute());
+        }
       } else {
         final userCredentials = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
@@ -78,8 +84,9 @@ class AuthenticationViewModel extends Cubit<bool> {
             .doc(userCredentials.user!.uid)
             .set({"name": _enteredName});
 
-        LoggedUser.instance.name = _enteredName;
-        LoggedUser.instance.email = _enteredEmail;
+        if (context.mounted) {
+          context.router.push(const PokemonListRoute());
+        }
       }
     } on FirebaseAuthException catch (error) {
       emit(false); //Done authenticating
@@ -98,12 +105,14 @@ class AuthenticationViewModel extends Cubit<bool> {
         errorMessage = "Oops, qualcosa è andato storto";
       }
 
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage),
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+          ),
+        );
+      }
     }
   }
 }

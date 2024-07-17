@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/application/models/logged_user.dart';
+import 'package:pokedex/application/navigation/app_router.dart';
 import 'package:pokedex/application/views/authentication/authentication_view.dart';
 import 'package:pokedex/application/views/splash/splash_view.dart';
 import 'package:pokedex/application/views/pokemon_list/pokemon_list_view.dart';
 import 'package:pokedex/firebase_options.dart';
+import 'package:auto_route/auto_route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,16 +16,22 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: _appRouter.config(),
+    );
+
+    /* MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
@@ -45,7 +53,7 @@ class MyApp extends StatelessWidget {
           return const AuthenticationView();
         },
       ),
-    );
+    ); */
   }
 
   void setLoggedUserData(User user) async {
