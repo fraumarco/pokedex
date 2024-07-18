@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/bloc/pokemon_detail_bloc.dart';
+import 'package:pokedex/application/extensions/string_extension.dart';
 import 'package:pokedex/application/navigation/app_router.dart';
 import 'package:pokedex/application/networking/response/pokemon_response.dart';
 import 'package:pokedex/application/views/pokemon_list/pokemon_list_viewmodel.dart';
@@ -48,15 +49,18 @@ class _PokemonListState extends State<PokemonList> {
           itemCount: widget.pokemonList.length + 1,
           itemBuilder: (builderCtx, index) {
             if (index < widget.pokemonList.length) {
-              return PokemonListCard(
-                pokemon: widget.pokemonList[index],
-                pokemonIndex: index,
-                onTap: () {
-                  _bloc.add(LoadingPokemonEvent(index));
-                  if (widget.orientation == Orientation.portrait) {
-                    context.router.push(const PokemonDetailRoute());
-                  }
-                },
+              return Hero(
+                tag: widget.pokemonList[index].name?.capitalized ?? "",
+                child: PokemonListCard(
+                  pokemon: widget.pokemonList[index],
+                  pokemonIndex: index,
+                  onTap: () {
+                    _bloc.add(LoadingPokemonEvent(index));
+                    if (widget.orientation == Orientation.portrait) {
+                      context.router.push(const PokemonDetailRoute());
+                    }
+                  },
+                ),
               );
             } else {
               return const LoaderListCard();

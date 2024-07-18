@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/bloc/pokemon_detail_bloc.dart';
 import 'package:pokedex/application/extensions/string_extension.dart';
 import 'package:pokedex/application/views/pokemon_detail/pokemon_detail_viewmodel.dart';
+import 'package:pokedex/application/widgets/pokemon_detail_info_card.dart';
 
 @RoutePage()
 class PokemonDetailView extends StatefulWidget {
@@ -43,10 +44,6 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
                   appBar: orientation == Orientation.portrait
                       ? AppBar(
                           backgroundColor: Colors.red,
-                          title: Image.asset(
-                            'lib/assets/images/logo.png',
-                            width: 120,
-                          ),
                         )
                       : null,
                   body: const Center(
@@ -58,9 +55,10 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
                   appBar: orientation == Orientation.portrait
                       ? AppBar(
                           backgroundColor: Colors.red,
-                          title: Image.asset(
-                            'lib/assets/images/logo.png',
-                            width: 120,
+                          title: Text(
+                            viewModel.pokemonName,
+                            style: const TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold),
                           ),
                         )
                       : null,
@@ -82,47 +80,20 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
                                     const SizedBox(
                                       height: 32,
                                     ),
-                                    Text(
-                                      "Name: ${viewModel.pokemonName}",
-                                      textAlign: TextAlign.start,
-                                      style: const TextStyle(
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Card(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 16),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            const Text(
-                                              "Statistics",
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 28),
-                                            ),
-                                            const SizedBox(
-                                              height: 16,
-                                            ),
-                                            for (final stat
-                                                in viewModel.pokemonStats)
-                                              Text(
-                                                "${stat.stat?.name?.capitalized ?? ""}: ${stat.baseStat}",
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 20),
-                                              ),
-                                          ],
-                                        ),
+                                    if (orientation == Orientation.landscape)
+                                      Text(
+                                        "Name: ${viewModel.pokemonName}",
+                                        textAlign: TextAlign.start,
+                                        style: const TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                    ),
+                                    PokemonDetailInfoCard(
+                                        title: "Statistics",
+                                        infoValues: viewModel.pokemonStatsInfo),
+                                    PokemonDetailInfoCard(
+                                        title: "Types",
+                                        infoValues: viewModel.pokemonTypesInfo),
                                     const Spacer()
                                   ],
                                 ),
@@ -139,10 +110,6 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
                 appBar: orientation == Orientation.portrait
                     ? AppBar(
                         backgroundColor: Colors.red,
-                        title: Image.asset(
-                          'lib/assets/images/logo.png',
-                          width: 120,
-                        ),
                       )
                     : null,
                 body: const Center(

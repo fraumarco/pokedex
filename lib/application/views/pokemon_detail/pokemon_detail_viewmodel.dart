@@ -33,18 +33,34 @@ class PokemonDetailViewModel {
     return "Unknown";
   }
 
-  List<Stats> get pokemonStats {
+  List<Stats> get _pokemonStats {
     if (_pokemon == null) {
       return [];
     }
     return _pokemon!.stats ?? [];
   }
 
-  List<Types> get pokemonTypes {
+  List<String> get pokemonStatsInfo {
+    List<String> info = [];
+    for (final stat in _pokemonStats) {
+      info.add("${stat.stat?.name?.capitalized}: ${stat.baseStat}");
+    }
+    return info;
+  }
+
+  List<Types> get _pokemonTypes {
     if (_pokemon == null) {
       return [];
     }
 
     return _pokemon!.types ?? [];
+  }
+
+  List<String> get pokemonTypesInfo {
+    List<String> info = [];
+    for (final type in _pokemonTypes) {
+      info.add("${type.type?.name?.capitalized}");
+    }
+    return info;
   }
 }

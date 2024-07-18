@@ -20,7 +20,7 @@ class AuthenticationViewModel extends Cubit<bool> {
 
   String? validateEmail(String? email) {
     if (email == null || email.trim().isEmpty || !email.contains("@")) {
-      return "Mail non valida. Inseriscine una esistente.";
+      return "Invalid mail. Please insert a valid one.";
     }
 
     return null;
@@ -28,7 +28,7 @@ class AuthenticationViewModel extends Cubit<bool> {
 
   String? validatePassword(String? password) {
     if (password == null || password.length < 6) {
-      return "La password deve contenere almeno 6 caratteri";
+      return "Password must be at least 6 characters long";
     }
 
     return null;
@@ -36,7 +36,7 @@ class AuthenticationViewModel extends Cubit<bool> {
 
   String? validateName(String? name) {
     if (name == null || name.trim().isEmpty) {
-      return "Il nome non può essere vuoto";
+      return "Name field can't be empty";
     }
 
     return null;
@@ -93,15 +93,15 @@ class AuthenticationViewModel extends Cubit<bool> {
       String errorMessage = "";
 
       if (error.code == "invalid-credential") {
-        errorMessage = "Mail o password non valide.";
+        errorMessage = "Inavalid mail or password.";
       } else if (error.code == "user-disabled") {
-        errorMessage = "Utente disabilitato.";
+        errorMessage = "User disabled.";
       } else if (error.code == "user-not-found") {
-        errorMessage = "Questo utente non esiste.";
+        errorMessage = "This user does not exists.";
       } else if (error.code == "email-already-in-use") {
-        errorMessage = "Questo utente è già registrato.";
+        errorMessage = "This user is already registered.";
       } else {
-        errorMessage = "Oops, qualcosa è andato storto";
+        errorMessage = "Oops, something went wrong";
       }
 
       if (context.mounted) {
