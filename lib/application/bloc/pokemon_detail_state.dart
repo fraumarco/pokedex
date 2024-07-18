@@ -9,21 +9,25 @@ sealed class PokemonDetailState extends Equatable {
 
 class PokemonDetailInitial extends PokemonDetailState {}
 
-class LoadingPokemonDetail extends PokemonDetailInitial {
-  @override
-  List<Object> get props => [];
-}
-
 class NoPokemonDetail extends PokemonDetailInitial {
   @override
   List<Object> get props => [];
 }
 
-class SelectedPokemonDetail extends PokemonDetailInitial {
-  SelectedPokemonDetail(this.selectedPokemonIndex);
+class LoadingPokemonDetail extends PokemonDetailInitial {
+  LoadingPokemonDetail(this.pokemonIndex);
 
-  final int selectedPokemonIndex;
+  final int pokemonIndex;
 
   @override
-  List<Object> get props => [selectedPokemonIndex];
+  List<Object> get props => [pokemonIndex];
+}
+
+class SelectedPokemonDetail extends PokemonDetailInitial {
+  SelectedPokemonDetail(this.selectedPokemon);
+
+  final PokemonDetailResponse selectedPokemon;
+
+  @override
+  List<Object> get props => [selectedPokemon];
 }

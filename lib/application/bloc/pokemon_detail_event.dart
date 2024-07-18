@@ -13,15 +13,19 @@ class NoPokemonEvent extends PokemonDetailEvent {
 }
 
 class LoadingPokemonEvent extends PokemonDetailEvent {
+  const LoadingPokemonEvent(this.pokemonIndex);
+
+  final int pokemonIndex;
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [pokemonIndex];
 }
 
 class SelectPokemonEvent extends PokemonDetailEvent {
-  SelectPokemonEvent(this.selectedPokemonIndex);
+  const SelectPokemonEvent(this.selectedPokemon);
 
-  final int selectedPokemonIndex;
+  final PokemonDetailResponse selectedPokemon;
 
   @override
-  List<Object> get props => [selectedPokemonIndex];
+  List<Object> get props => [selectedPokemon];
 }

@@ -52,7 +52,7 @@ class _PokemonListState extends State<PokemonList> {
                 pokemon: widget.pokemonList[index],
                 pokemonIndex: index,
                 onTap: () {
-                  _bloc.add(SelectPokemonEvent(index));
+                  _bloc.add(LoadingPokemonEvent(index));
                   if (widget.orientation == Orientation.portrait) {
                     context.router.push(const PokemonDetailRoute());
                   }

@@ -7,9 +7,7 @@ import 'package:pokedex/application/navigation/app_router.dart';
 import 'package:pokedex/application/networking/response/pokemon_response.dart';
 import 'package:pokedex/application/views/pokemon_detail/pokemon_detail_view.dart';
 import 'package:pokedex/application/views/pokemon_list/pokemon_list_viewmodel.dart';
-import 'package:pokedex/application/widgets/loader_list_card.dart';
 import 'package:pokedex/application/widgets/pokemon_list.dart';
-import 'package:pokedex/application/widgets/pokemon_list_card.dart';
 
 @RoutePage()
 class PokemonListView extends StatefulWidget {

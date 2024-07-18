@@ -18,24 +18,35 @@ class PokemonListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Card(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        child: Row(
-          children: [
-            Image(
-                image: NetworkImage(
-                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonIndex + 1}.png")),
-            const SizedBox(
-              width: 16,
-            ),
-            Text(
-              pokemon.name?.capitalized ?? "",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer),
-            )
-          ],
+      child: Hero(
+        tag: pokemon.name?.capitalized ?? "",
+        child: Card(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                width: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Image.network(
+                  "https://img.pokemondb.net/sprites/home/normal/${pokemon.name}.png",
+                  width: 100,
+                ),
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Text(
+                pokemon.name?.capitalized ?? "",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
+              )
+            ],
+          ),
         ),
       ),
     );

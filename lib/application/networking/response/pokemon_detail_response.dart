@@ -14,13 +14,13 @@ class PokemonDetailResponse extends Equatable {
     if (json['stats'] != null) {
       stats = <Stats>[];
       json['stats'].forEach((v) {
-        stats!.add(new Stats.fromJson(v));
+        stats!.add(Stats.fromJson(v));
       });
     }
     if (json['types'] != null) {
       types = <Types>[];
       json['types'].forEach((v) {
-        types!.add(new Types.fromJson(v));
+        types!.add(Types.fromJson(v));
       });
     }
   }

@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/bloc/pokemon_detail_bloc.dart';
-import 'package:pokedex/application/models/logged_user.dart';
 import 'package:pokedex/application/navigation/app_router.dart';
 import 'package:pokedex/firebase_options.dart';
 

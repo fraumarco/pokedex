@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pokedex/application/networking/response/pokemon_detail_response.dart';
 import 'package:pokedex/application/networking/response/pokemon_response.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:retrofit/http.dart';
@@ -19,7 +20,7 @@ abstract class RestClient {
   });
 
   @GET(Apis.pokemonDetail)
-  Future<PokemonResponse> getPokemonDetail({
+  Future<PokemonDetailResponse> getPokemonDetail({
     @Path("index") required int index,
   });
 }
