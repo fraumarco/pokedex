@@ -46,8 +46,8 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                     ),
                     Text(
                       viewModel.isLogin
-                          ? "Bentornato Allenatore!"
-                          : "Benvenuto Allenatore!",
+                          ? "Welcome back Trainer!"
+                          : "Welcome Trainer!",
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 28,
@@ -71,7 +71,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                                 if (!viewModel.isLogin)
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      labelText: "Nome",
+                                      labelText: "Name",
                                       labelStyle:
                                           TextStyle(color: Colors.white),
                                     ),
@@ -133,7 +133,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            viewModel.isLogin ? "Login" : "Registrati",
+                            viewModel.isLogin ? "Login" : "Sign up",
                             style: const TextStyle(fontSize: 16),
                           ),
                         ),
@@ -149,9 +149,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                           });
                         },
                         child: Text(
-                          viewModel.isLogin
-                              ? "Registra un account"
-                              : "Esegui l'accesso",
+                          viewModel.isLogin ? "Register an account" : "Sign in",
                           style: const TextStyle(
                               color: Colors.white, fontSize: 16),
                         ),

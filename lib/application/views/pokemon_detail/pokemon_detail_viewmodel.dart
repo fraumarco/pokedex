@@ -39,4 +39,12 @@ class PokemonDetailViewModel {
     }
     return _pokemon!.stats ?? [];
   }
+
+  List<Types> get pokemonTypes {
+    if (_pokemon == null) {
+      return [];
+    }
+
+    return _pokemon!.types ?? [];
+  }
 }
