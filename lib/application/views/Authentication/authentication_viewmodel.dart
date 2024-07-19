@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,9 +9,11 @@ class AuthenticationViewModel extends Cubit<bool> {
 
   bool isLogin = true;
   bool isAuthenticating = false;
-  String _enteredName = "";
-  String _enteredEmail = "";
-  String _enteredPassword = "";
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   void toggleLogin() {
     isLogin = !isLogin;
@@ -34,24 +35,12 @@ class AuthenticationViewModel extends Cubit<bool> {
     return null;
   }
 
-  String? validateName(String? name) {
-    if (name == null || name.trim().isEmpty) {
-      return "Name field can't be empty";
+  String? validateConfirmPassword(String? password) {
+    if (passwordController.text != confirmPasswordController.text) {
+      return "Passwords must match with eachother";
     }
 
     return null;
-  }
-
-  void setName(String name) {
-    _enteredName = name;
-  }
-
-  void setEmail(String email) {
-    _enteredEmail = email;
-  }
-
-  void setPassword(String password) {
-    _enteredPassword = password;
   }
 
   void save(GlobalKey<FormState> form, BuildContext context) async {
@@ -68,20 +57,14 @@ class AuthenticationViewModel extends Cubit<bool> {
 
       if (isLogin) {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _enteredEmail, password: _enteredPassword);
+            email: emailController.text, password: passwordController.text);
 
         if (context.mounted) {
           context.router.push(const PokemonListRoute());
         }
       } else {
-        final userCredentials = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: _enteredEmail, password: _enteredPassword);
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredentials.user!.uid)
-            .set({"name": _enteredName});
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
 
         if (context.mounted) {
           context.router.push(const PokemonListRoute());

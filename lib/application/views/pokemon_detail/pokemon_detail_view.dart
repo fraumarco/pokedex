@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/bloc/pokemon_detail_bloc.dart';
-import 'package:pokedex/application/extensions/string_extension.dart';
 import 'package:pokedex/application/views/pokemon_detail/pokemon_detail_viewmodel.dart';
 import 'package:pokedex/application/widgets/pokemon_detail_info_card.dart';
 
