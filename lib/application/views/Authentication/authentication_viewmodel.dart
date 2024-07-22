@@ -60,14 +60,14 @@ class AuthenticationViewModel extends Cubit<bool> {
             email: emailController.text, password: passwordController.text);
 
         if (context.mounted) {
-          context.router.push(const PokemonListRoute());
+          context.router.push(const TabsRoute());
         }
       } else {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
 
         if (context.mounted) {
-          context.router.push(const PokemonListRoute());
+          context.router.push(const TabsRoute());
         }
       }
     } on FirebaseAuthException catch (error) {

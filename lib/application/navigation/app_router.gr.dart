@@ -21,6 +21,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthenticationView(),
       );
     },
+    FavoritePokemonRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FavoritePokemonView(),
+      );
+    },
     PokemonDetailRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -31,6 +37,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const PokemonListView(),
+      );
+    },
+    TabsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TabsView(),
       );
     },
   };
@@ -46,6 +58,20 @@ class AuthenticationRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AuthenticationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FavoritePokemonView]
+class FavoritePokemonRoute extends PageRouteInfo<void> {
+  const FavoritePokemonRoute({List<PageRouteInfo>? children})
+      : super(
+          FavoritePokemonRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FavoritePokemonRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -74,6 +100,20 @@ class PokemonListRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'PokemonListRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TabsView]
+class TabsRoute extends PageRouteInfo<void> {
+  const TabsRoute({List<PageRouteInfo>? children})
+      : super(
+          TabsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TabsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

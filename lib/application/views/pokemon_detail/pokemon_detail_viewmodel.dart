@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pokedex/application/bloc/pokemon_detail_bloc.dart';
 import 'package:pokedex/application/extensions/string_extension.dart';
 import 'package:pokedex/application/networking/response/pokemon_detail_response.dart';
@@ -9,13 +11,51 @@ class PokemonDetailViewModel {
 
   PokemonDetailResponse? _pokemon;
 
+  bool isFavorite = false;
+
   void loadDetail(PokemonDetailBloc bloc, int pokemonIndex) async {
-    final pokemonDetail =
-        await client.getPokemonDetail(index: pokemonIndex + 1);
+    final pokemonDetail = await client.getPokemonDetail(index: pokemonIndex);
 
     _pokemon = pokemonDetail;
 
+    final userCredentials = FirebaseAuth.instance.currentUser;
+    final favoritesData = await FirebaseFirestore.instance
+        .collection("favorites-${userCredentials!.uid}")
+        .get();
+
+    final docs = favoritesData.docs;
+
+    isFavorite = false;
+    for (final doc in docs) {
+      if (doc.data()["id"] == _pokemon?.id) {
+        isFavorite = true;
+      }
+    }
+
     bloc.add(SelectPokemonEvent(pokemonDetail));
+  }
+
+  void setFavorite() {
+    final userCredentials = FirebaseAuth.instance.currentUser;
+
+    if (!isFavorite) {
+      FirebaseFirestore.instance
+          .collection("favorites-${userCredentials!.uid}")
+          .doc(_pokemon?.name)
+          .set({
+        "id": _pokemon?.id,
+        "name": _pokemon?.name,
+      });
+
+      isFavorite = true;
+    } else {
+      FirebaseFirestore.instance
+          .collection("favorites-${userCredentials!.uid}")
+          .doc(_pokemon?.name)
+          .delete();
+
+      isFavorite = false;
+    }
   }
 
   String get pokemonImageUrl {

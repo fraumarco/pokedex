@@ -30,6 +30,12 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
     super.dispose();
   }
 
+  void _tapFavorite() {
+    setState(() {
+      viewModel.setFavorite();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -59,6 +65,13 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
                             style: const TextStyle(
                                 fontSize: 28, fontWeight: FontWeight.bold),
                           ),
+                          actions: [
+                            IconButton(
+                                onPressed: _tapFavorite,
+                                icon: Icon(viewModel.isFavorite
+                                    ? Icons.star
+                                    : Icons.star_border))
+                          ],
                         )
                       : null,
                   body: LayoutBuilder(
@@ -75,6 +88,16 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
                               child: IntrinsicHeight(
                                 child: Column(
                                   children: [
+                                    if (orientation == Orientation.landscape)
+                                      Container(
+                                        alignment: Alignment.centerRight,
+                                        child: IconButton(
+                                          onPressed: _tapFavorite,
+                                          icon: Icon(viewModel.isFavorite
+                                              ? Icons.star
+                                              : Icons.star_border),
+                                        ),
+                                      ),
                                     Image.network(viewModel.pokemonImageUrl),
                                     const SizedBox(
                                       height: 32,

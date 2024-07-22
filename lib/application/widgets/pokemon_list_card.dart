@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/application/extensions/string_extension.dart';
+import 'package:pokedex/application/models/pokemon.dart';
 import 'package:pokedex/application/networking/response/pokemon_response.dart';
 
 class PokemonListCard extends StatelessWidget {
   const PokemonListCard(
-      {super.key,
-      required this.pokemon,
-      required this.pokemonIndex,
-      required this.onTap});
+      {super.key, required this.pokemon, required this.onTap});
 
-  final PokemonResultResponse pokemon;
-  final int pokemonIndex;
+  final Pokemon pokemon;
 
   final void Function() onTap;
 
@@ -44,7 +41,7 @@ class PokemonListCard extends StatelessWidget {
               width: 16,
             ),
             Text(
-              pokemon.name?.capitalized ?? "",
+              pokemon.name.capitalized,
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
