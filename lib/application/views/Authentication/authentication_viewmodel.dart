@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/navigation/app_router.dart';
+import 'package:pokedex/application/utils/firebase_error_enum.dart';
 
 class AuthenticationViewModel extends Cubit<bool> {
   AuthenticationViewModel() : super(false);
@@ -74,17 +75,18 @@ class AuthenticationViewModel extends Cubit<bool> {
       emit(false); //Done authenticating
 
       String errorMessage = "";
-
+      //FIXME: qui non è meglio creare un ENUM con un extentions per mostrare il errorMessage?
+      // cosi si può avere una cosa del genere FirebaseErrorEnum.traslatedMessage
       if (error.code == "invalid-credential") {
-        errorMessage = "Inavalid mail or password.";
+        errorMessage = FirebaseErrorEnum.invalidCredentials.message;
       } else if (error.code == "user-disabled") {
-        errorMessage = "User disabled.";
+        errorMessage = FirebaseErrorEnum.userDisabled.message;
       } else if (error.code == "user-not-found") {
-        errorMessage = "This user does not exists.";
+        errorMessage = FirebaseErrorEnum.userNotFound.message;
       } else if (error.code == "email-already-in-use") {
-        errorMessage = "This user is already registered.";
+        errorMessage = FirebaseErrorEnum.emailAlreadyUsed.message;
       } else {
-        errorMessage = "Oops, something went wrong";
+        errorMessage = FirebaseErrorEnum.genericError.message;
       }
 
       if (context.mounted) {

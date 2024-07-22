@@ -21,7 +21,7 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<PokemonResponse> getPaginatedPokemon({required int offset}) async {
+  Future<PokemonResponse> getInitialPokemon() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,34 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'pokemon?limit=20&offset=${offset}',
+              'pokemon',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = PokemonResponse.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<PokemonResponse> getPaginatedPokemon({required String path}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<PokemonResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '${path}',
               queryParameters: queryParameters,
               data: _data,
             )

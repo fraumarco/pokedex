@@ -11,18 +11,20 @@ class PokemonListViewModel extends Cubit<List<Pokemon>>
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
 
   final List<Pokemon> _pokemon = [];
-  int _apiOffset = 0;
+  String? nextPage;
 
   @override
   void getData() async {
-    final pokemon = await client.getPaginatedPokemon(offset: _apiOffset);
+    final pokemon = (nextPage != null)
+        ? await client.getPaginatedPokemon(path: nextPage!)
+        : await client.getInitialPokemon();
     final pokemonResultList = pokemon.results ?? [];
+
+    nextPage = pokemon.next?.replaceAll(BaseValues.path, "");
 
     _pokemon.addAll(pokemonResultList.map((item) =>
         Pokemon(pokemonResultList.indexOf(item) + 1, item.name ?? "")));
 
     emit([..._pokemon]);
-
-    _apiOffset += 20;
   }
 }

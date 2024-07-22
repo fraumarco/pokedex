@@ -40,9 +40,20 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
   Widget build(BuildContext context) {
     return BlocBuilder(
         bloc: _bloc,
-        builder: (ctx1, state) {
+        builder: (ctx1, state) {    //FIXME: che cos'è ctx1 ? e ctx2 ?
           return OrientationBuilder(
             builder: (ctx2, orientation) {
+              //FIXME: questa parte di controllo degli stati non può esser fatta in modo diverso?
+              // per fare questo refactor è necessario toccare gli eventi
+              // loading: {
+              //      codice
+              // }
+              // pokemonSelected: {
+              //      codice
+              // }
+              // ecc: {
+              //      codice
+              // }
               if (state is LoadingPokemonDetail) {
                 viewModel.loadDetail(_bloc, state.pokemonIndex);
                 return Scaffold(

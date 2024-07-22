@@ -5,18 +5,25 @@ import 'package:retrofit/retrofit.dart';
 import 'package:retrofit/http.dart';
 part 'rest_client.g.dart';
 
+class BaseValues {
+  static const String path = "https://pokeapi.co/api/v2/";
+}
+
 class Apis {
-  static const String pokemon = "pokemon?limit=20&offset={offset}";
+  static const String pokemon = "pokemon";
   static const String pokemonDetail = "pokemon/{index}/";
 }
 
-@RestApi(baseUrl: "https://pokeapi.co/api/v2/")
+@RestApi(baseUrl: BaseValues.path)
 abstract class RestClient {
   factory RestClient(Dio dio, {String? baseUrl}) = _RestClient;
 
   @GET(Apis.pokemon)
+  Future<PokemonResponse> getInitialPokemon();
+
+  @GET("{path}")
   Future<PokemonResponse> getPaginatedPokemon({
-    @Path("offset") required int offset,
+    @Path("path") required String path,
   });
 
   @GET(Apis.pokemonDetail)

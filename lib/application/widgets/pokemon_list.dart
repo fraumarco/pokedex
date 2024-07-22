@@ -11,6 +11,7 @@ import 'package:pokedex/application/views/pokemon_list/pokemon_list_viewmodel.da
 import 'package:pokedex/application/widgets/loader_list_card.dart';
 import 'package:pokedex/application/widgets/pokemon_list_card.dart';
 
+//FIXME: Per me questi sono componenti delle singole pagine, cosi mi aspetterei che fossero comuni per tutti... ma sembrano specifici alla lista, dettaglio. Quindi per il package avrei creato un "component" e li avrei messi li dentro
 class PokemonList extends StatefulWidget {
   const PokemonList(
       {super.key,

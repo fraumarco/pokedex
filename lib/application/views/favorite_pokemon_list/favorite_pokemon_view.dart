@@ -44,7 +44,10 @@ class _FavoritePokemonViewState extends State<FavoritePokemonView> {
 
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                 return const Center(
-                  child: Text("No messages found"),
+                  child: Text(
+                    "No favorite Pokémons found.\nAdd some!",
+                    textAlign: TextAlign.center,
+                  ),
                 );
               }
 
@@ -70,10 +73,6 @@ class _FavoritePokemonViewState extends State<FavoritePokemonView> {
                   Expanded(
                     child: Column(
                       children: [
-                        if (kIsWeb)
-                          const SizedBox(
-                            height: 50,
-                          ),
                         if (kIsWeb)
                           const Text(
                             "Favorite Pokémon",
