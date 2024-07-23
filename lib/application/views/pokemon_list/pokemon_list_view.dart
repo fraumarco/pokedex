@@ -1,12 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/models/pokemon.dart';
-import 'package:pokedex/application/navigation/app_router.dart';
-import 'package:pokedex/application/networking/response/pokemon_response.dart';
 import 'package:pokedex/application/views/pokemon_detail/pokemon_detail_view.dart';
 import 'package:pokedex/application/views/pokemon_list/pokemon_list_viewmodel.dart';
 import 'package:pokedex/application/widgets/pokemon_list.dart';

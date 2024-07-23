@@ -5,9 +5,7 @@ import 'package:pokedex/application/bloc/pokemon_detail_bloc.dart';
 import 'package:pokedex/application/extensions/string_extension.dart';
 import 'package:pokedex/application/models/pokemon.dart';
 import 'package:pokedex/application/navigation/app_router.dart';
-import 'package:pokedex/application/networking/response/pokemon_response.dart';
 import 'package:pokedex/application/protocols/pokemon_list_viewmodel_protocol.dart';
-import 'package:pokedex/application/views/pokemon_list/pokemon_list_viewmodel.dart';
 import 'package:pokedex/application/widgets/loader_list_card.dart';
 import 'package:pokedex/application/widgets/pokemon_list_card.dart';
 

@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokedex/application/models/pokemon.dart';
 import 'package:pokedex/application/views/favorite_pokemon_list/favorite_pokemon_viewmodel.dart';
 import 'package:pokedex/application/views/pokemon_detail/pokemon_detail_view.dart';
 import 'package:pokedex/application/widgets/pokemon_list.dart';

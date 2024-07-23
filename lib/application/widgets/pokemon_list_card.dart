@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/application/extensions/string_extension.dart';
 import 'package:pokedex/application/models/pokemon.dart';
-import 'package:pokedex/application/networking/response/pokemon_response.dart';
 
 class PokemonListCard extends StatelessWidget {
   const PokemonListCard(
