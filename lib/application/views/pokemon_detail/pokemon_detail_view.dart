@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/application/bloc/pokemon_detail_bloc.dart';
 import 'package:pokedex/application/views/pokemon_detail/pokemon_detail_viewmodel.dart';
-import 'package:pokedex/application/widgets/pokemon_detail_info_card.dart';
+import 'package:pokedex/application/views/pokemon_detail/widgets/loaded_pokemon_detail.dart';
+import 'package:pokedex/application/views/pokemon_detail/widgets/loading_pokemon_detail.dart';
+import 'package:pokedex/application/views/pokemon_detail/widgets/no_pokemon_detail.dart';
 
 @RoutePage()
 class PokemonDetailView extends StatefulWidget {
@@ -36,121 +38,72 @@ class _PokemonDetailViewState extends State<PokemonDetailView> {
     });
   }
 
+  Widget _activeView = const NoPokemonDetailWidget();
+
+  void setView(Widget view) {
+    setState(() {
+      _activeView = view;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-        bloc: _bloc,
-        builder: (ctx1, state) {    //FIXME: che cos'è ctx1 ? e ctx2 ?
-          return OrientationBuilder(
-            builder: (ctx2, orientation) {
-              //FIXME: questa parte di controllo degli stati non può esser fatta in modo diverso?
-              // per fare questo refactor è necessario toccare gli eventi
-              // loading: {
-              //      codice
-              // }
-              // pokemonSelected: {
-              //      codice
-              // }
-              // ecc: {
-              //      codice
-              // }
-              if (state is LoadingPokemonDetail) {
-                viewModel.loadDetail(_bloc, state.pokemonIndex);
-                return Scaffold(
-                  appBar: orientation == Orientation.portrait
-                      ? AppBar(
-                          backgroundColor: Colors.red,
-                        )
-                      : null,
-                  body: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              } else if (state is SelectedPokemonDetail) {
-                return Scaffold(
-                  appBar: orientation == Orientation.portrait
-                      ? AppBar(
-                          backgroundColor: Colors.red,
-                          title: Text(
-                            viewModel.pokemonName,
-                            style: const TextStyle(
-                                fontSize: 28, fontWeight: FontWeight.bold),
-                          ),
-                          actions: [
-                            IconButton(
-                                onPressed: _tapFavorite,
-                                icon: Icon(viewModel.isFavorite
-                                    ? Icons.star
-                                    : Icons.star_border))
-                          ],
-                        )
-                      : null,
-                  body: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return Hero(
-                        tag: viewModel.pokemonName,
-                        child: Center(
-                          child: SingleChildScrollView(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  minHeight: constraints.maxHeight,
-                                  maxWidth: constraints.maxWidth),
-                              child: IntrinsicHeight(
-                                child: Column(
-                                  children: [
-                                    if (orientation == Orientation.landscape)
-                                      Container(
-                                        alignment: Alignment.centerRight,
-                                        child: IconButton(
-                                          onPressed: _tapFavorite,
-                                          icon: Icon(viewModel.isFavorite
-                                              ? Icons.star
-                                              : Icons.star_border),
-                                        ),
-                                      ),
-                                    Image.network(viewModel.pokemonImageUrl),
-                                    const SizedBox(
-                                      height: 32,
-                                    ),
-                                    if (orientation == Orientation.landscape)
-                                      Text(
-                                        "Name: ${viewModel.pokemonName}",
-                                        textAlign: TextAlign.start,
-                                        style: const TextStyle(
-                                            fontSize: 28,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    PokemonDetailInfoCard(
-                                        title: "Statistics",
-                                        infoValues: viewModel.pokemonStatsInfo),
-                                    PokemonDetailInfoCard(
-                                        title: "Types",
-                                        infoValues: viewModel.pokemonTypesInfo),
-                                    const Spacer()
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }
-              return Scaffold(
-                appBar: orientation == Orientation.portrait
-                    ? AppBar(
-                        backgroundColor: Colors.red,
-                      )
-                    : null,
-                body: const Center(
-                  child: Text("Please select one Pokémon "),
-                ),
-              );
-            },
-          );
-        });
+      builder: (context, state) {
+        if (state is LoadingPokemonDetail) {
+          viewModel.loadDetail(_bloc, state.pokemonIndex);
+          return const LoadingPokemonDetailWidget();
+        }
+
+        if (state is SelectedPokemonDetail) {
+          return LoadedPokemonDetailWidget(
+              viewModel: viewModel, tapFavorite: _tapFavorite);
+        }
+
+        return const NoPokemonDetailWidget();
+      },
+      bloc: _bloc,
+    );
   }
 }
+
+/* BlocConsumer(
+        builder: (context, state) {
+          return _activeView;
+        },
+        listener: (context, state) {
+          if (state is LoadingPokemonDetail) {
+            viewModel.loadDetail(_bloc, state.pokemonIndex);
+            setView(const LoadingPokemonDetailWidget());
+          }
+
+          if (state is SelectedPokemonDetail) {
+            setView(LoadedPokemonDetailWidget(
+                viewModel: viewModel, tapFavorite: _tapFavorite));
+          }
+
+          if (state is NoPokemonDetail) {
+            setView(const NoPokemonDetailWidget());
+          }
+        },
+        bloc: _bloc); */
+
+/* BlocListener<PokemonDetailBloc, PokemonDetailState>(
+      listener: (context, state) {
+        if (state is LoadingPokemonDetail) {
+          viewModel.loadDetail(_bloc, state.pokemonIndex);
+          setView(const LoadingPokemonDetailWidget());
+        }
+
+        if (state is SelectedPokemonDetail) {
+          setView(LoadedPokemonDetailWidget(
+              viewModel: viewModel, tapFavorite: _tapFavorite));
+        }
+
+        if (state is NoPokemonDetail) {
+          setView(const NoPokemonDetailWidget());
+        }
+      },
+      bloc: _bloc,
+      child: _activeView,
+    ); */

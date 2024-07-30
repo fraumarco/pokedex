@@ -48,10 +48,10 @@ class _PokemonListState extends State<PokemonList> {
             child: PokemonListCard(
               pokemon: widget.pokemonList[index],
               onTap: () {
-                _bloc.add(LoadingPokemonEvent(widget.pokemonList[index].id));
                 if (widget.orientation == Orientation.portrait) {
                   context.router.push(const PokemonDetailRoute());
                 }
+                _bloc.add(LoadingPokemonEvent(widget.pokemonList[index].id));
               },
             ),
           );
